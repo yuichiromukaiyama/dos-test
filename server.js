@@ -20,7 +20,7 @@ app.get("/dos", (req, res) => {
   console.log("start", count);
   const bigHash = [];
   const bigArray = [];
-  for (let i = 0; i < 100000; i++) {
+  for (let i = 0; i < 10000; i++) {
     bigHash.push(crypto.randomBytes(120).toString("hex"));
     bigArray.push(fs.readFileSync(path.resolve("public", "sample.jpeg")));
   }
