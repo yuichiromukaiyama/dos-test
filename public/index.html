@@ -51,7 +51,24 @@
       <div id="card" class="card card-custom" style="width: 18rem">
         <div class="card-body">
           <h5 class="card-title">DOS TEST</h5>
-          <p class="card-text">100回、特定のAPIを呼び出します</p>
+          <p class="card-text">
+            <span id="count-api">0</span>回、特定のAPIを呼び出します
+          </p>
+          <input
+            id="input-api"
+            style="width: 100%"
+            type="number"
+            placeholder="API呼び出し回数"
+          />
+          <p class="card-text">
+            <span id="count-loop">0</span>回、内部でループします
+          </p>
+          <input
+            id="input-loop"
+            style="width: 100%"
+            type="number"
+            placeholder="API呼び出し回数"
+          />
           <button id="start" type="button" class="btn btn-primary">
             start
           </button>
@@ -67,15 +84,33 @@
     <script>
       const startElement = document.getElementById("start");
       const countElement = document.getElementById("counter");
+      const countAPIElement = document.getElementById("count-api");
+      const inputApiElement = document.getElementById("input-api");
+      const countLoopElement = document.getElementById("count-loop");
+      const inputLoopElement = document.getElementById("input-loop");
+
+      inputApiElement.addEventListener("change", (e) => {
+        countAPIElement.innerText = e.currentTarget.value;
+      });
+      inputLoopElement.addEventListener("change", (e) => {
+        countLoopElement.innerText = e.currentTarget.value;
+      });
 
       startElement.addEventListener("click", () => {
         let count = 0;
         alert("呼び出しを開始します");
-        console.log("start dos attack");
+        const currentCount = Number(inputApiElement.value);
+        console.log("start dos attack", currentCount);
 
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < currentCount; i++) {
           console.log("start id = " + count.toString());
-          fetch("/dos").then(() => {
+          const headers = new Headers();
+          headers.append("Content-Type", "application/json");
+          fetch("/dos", {
+            method: "POST",
+            headers,
+            body: JSON.stringify({ count: Number(inputLoopElement.value) }),
+          }).then(() => {
             count++;
             countElement.innerText = count;
             console.log("end id = " + count.toString());
