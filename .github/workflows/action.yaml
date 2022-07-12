@@ -1,5 +1,5 @@
 name: Publish Docker image
-on: [workflow_dispatch]
+on: push
 jobs:
   main:
     name: Push Docker image to Github Container Registry
