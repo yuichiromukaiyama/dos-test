@@ -23,15 +23,6 @@
         align-items: center;
         height: 100vh;
         width: 100vw;
-        gap: 50px;
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-
-      .card-custom {
-        width: 95%;
-        max-width: 400px;
-        min-height: 30vh;
       }
 
       #start {
@@ -40,12 +31,8 @@
         width: 100%;
       }
 
-      .counter-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        width: 100%;
+      .card-content {
+        margin-top: 20px;
       }
     </style>
   </head>
@@ -54,39 +41,39 @@
       <div class="card card-custom">
         <div class="card-body">
           <h5 class="card-title">DOS TEST</h5>
-          <p class="card-text">
-            <span id="count-api">0</span>回、特定のAPIを呼び出します
-          </p>
-          <input
-            id="input-api"
-            style="width: 100%"
-            type="number"
-            placeholder="API呼び出し回数"
-          />
-          <p class="card-text">
-            <span id="count-loop">0</span>回、内部でループします
-          </p>
-          <input
-            id="input-loop"
-            style="width: 100%"
-            type="number"
-            placeholder="API呼び出し回数"
-          />
+          <div class="card-content">
+            <p class="card-text">
+              <span id="count-api">0</span>回、特定のAPIを呼び出します
+            </p>
+            <input
+              id="input-api"
+              style="width: 100%"
+              type="number"
+              placeholder="API呼び出し回数"
+            />
+          </div>
+          <div class="card-content">
+            <p class="card-text">
+              <span id="count-loop">0</span>回、内部でループします
+            </p>
+            <input
+              id="input-loop"
+              style="width: 100%"
+              type="number"
+              placeholder="内部ループ回数"
+            />
+          </div>
           <button id="start" type="button" class="btn btn-primary">
             start
           </button>
-        </div>
-      </div>
-      <div class="card card-custom">
-        <div class="card-body counter-container">
-          <h6 id="counter" class="card-text">0</h6>
+          <p id="count" style="text-align: center"></p>
         </div>
       </div>
     </div>
 
     <script>
       const startElement = document.getElementById("start");
-      const countElement = document.getElementById("counter");
+      const countElement = document.getElementById("count");
       const countAPIElement = document.getElementById("count-api");
       const inputApiElement = document.getElementById("input-api");
       const countLoopElement = document.getElementById("count-loop");
@@ -115,7 +102,7 @@
             body: JSON.stringify({ count: Number(inputLoopElement.value) }),
           }).then(() => {
             count++;
-            countElement.innerText = count;
+            countElement.innerText = `${count.toString()}/${currentCount}`;
             console.log("end id = " + count.toString());
           });
         }
