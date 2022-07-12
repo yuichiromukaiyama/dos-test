@@ -51,7 +51,7 @@
       <div id="card" class="card card-custom" style="width: 18rem">
         <div class="card-body">
           <h5 class="card-title">DOS TEST</h5>
-          <p class="card-text">100000回、特定のAPIを呼び出します</p>
+          <p class="card-text">100回、特定のAPIを呼び出します</p>
           <button id="start" type="button" class="btn btn-primary">
             start
           </button>
@@ -68,19 +68,19 @@
       const startElement = document.getElementById("start");
       const countElement = document.getElementById("counter");
 
-      let count = 0;
-      console.log("start dos attack");
       startElement.addEventListener("click", () => {
+        let count = 0;
         alert("呼び出しを開始します");
-        Promise.all(
-          new Array(100).fill("").map(async () => {
-            fetch("/dos").then(() => {
-              count++;
-              countElement.innerText = count;
-              console.log("end " + count.toString());
-            });
-          })
-        );
+        console.log("start dos attack");
+
+        for (let i = 0; i < 100; i++) {
+          console.log("start id = " + count.toString());
+          fetch("/dos").then(() => {
+            count++;
+            countElement.innerText = count;
+            console.log("end id = " + count.toString());
+          });
+        }
       });
     </script>
   </body>

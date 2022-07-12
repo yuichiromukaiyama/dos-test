@@ -8,21 +8,25 @@ var cors = require("cors");
 app.use(cors());
 
 const json = JSON.parse(fs.readFileSync("./config.json").toString());
+let count = 0;
 
 app.get("/", (req, res) => {
+  count = 0;
   res.sendFile(path.resolve("public", "index.html"));
 });
-
-let count = 0;
 
 app.get("/dos", (req, res) => {
   count++;
   console.log("start", count);
-  let hash = "";
-
-  for (let i = 0; i < 2000000; i++) {
-    hash += (() => crypto.randomBytes(120).toString("hex"))();
+  const bigHash = [];
+  const bigArray = [];
+  for (let i = 0; i < 100000; i++) {
+    bigHash.push(crypto.randomBytes(120).toString("hex"));
+    bigArray.push(fs.readFileSync(path.resolve("public", "sample.jpeg")));
   }
+
+  console.log(bigHash.length, bigArray.length);
+
   res.type("application/json").status(200).send({ message: "OK" });
 });
 
