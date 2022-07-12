@@ -1,0 +1,87 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOS TEST</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      #root {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        gap: 50px;
+      }
+
+      .card-custom {
+        width: 30%;
+        height: 30vh;
+      }
+
+      #start {
+        margin-top: 2em;
+        margin-bottom: 2em;
+        width: 100%;
+      }
+
+      .counter-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div id="card" class="card card-custom" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title">DOS TEST</h5>
+          <p class="card-text">100000回、特定のAPIを呼び出します</p>
+          <button id="start" type="button" class="btn btn-primary">
+            start
+          </button>
+        </div>
+      </div>
+      <div class="card card-custom" style="width: 18rem">
+        <div class="card-body counter-container">
+          <h6 id="counter" class="card-text">0</h6>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const startElement = document.getElementById("start");
+      const countElement = document.getElementById("counter");
+
+      let count = 0;
+      console.log("start dos attack");
+      startElement.addEventListener("click", () => {
+        alert("呼び出しを開始します");
+        Promise.all(
+          new Array(100).fill("").map(async () => {
+            fetch("/dos").then(() => {
+              count++;
+              countElement.innerText = count;
+              console.log("end " + count.toString());
+            });
+          })
+        );
+      });
+    </script>
+  </body>
+</html>
